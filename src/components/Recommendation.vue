@@ -52,6 +52,7 @@ export default {
   name: "Recommendation",
   data() {
     return {
+      loading: false,
       labels: ["React", "Vanilla JS", "JQuery", "VueJS"],
       dataset: [5, 10, 15, 25],
       recoMods: 
@@ -119,6 +120,7 @@ export default {
         }
       }
       console.log(this.recoMods.Department);
+
       return this.recoMods;
     }
   }

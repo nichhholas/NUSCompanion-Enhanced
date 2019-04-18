@@ -30,7 +30,8 @@
         </v-flex>
         <v-flex xs4 sm4 text-xs>
           <div>
-            <v-btn block v-on:click="getModules()">Get Modules</v-btn>
+            <!-- {{this.loading}}<br> -->
+            <v-btn block v-on:click="getModules()" :loading="loading">Get Modules</v-btn>
           </div>
         </v-flex>
       </v-layout>
@@ -98,6 +99,7 @@ export default {
   name: "Choices",
   data: () => ({
     data: null,
+    loading: false,
     descData: null,
     count: 0,
     PE_MCs: null,
@@ -138,7 +140,9 @@ export default {
         });
     },
     async getModules() {
+      this.loading = true;
       await this.getData();
+      this.loading = false;
       //console.log(this.data);
       var datakeys = Object.keys(this.data);
       //console.log(datakeys);
@@ -266,6 +270,7 @@ export default {
       console.log(filtered_mods_GE)
       this.filtered_mods_UE = await this.filtered_mods_UE.slice(1, 1 + this.UE_MCs / 4);
       console.log(this.filtered_mods_UE)
+      this.loading = false;
 
       
     },

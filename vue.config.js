@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: "/armodillo/"
+    publicPath: "/armodillo-enhanced"
 }

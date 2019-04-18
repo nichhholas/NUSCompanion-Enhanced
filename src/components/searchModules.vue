@@ -24,6 +24,12 @@
         </b-card>
       </b-collapse>
     </div>
+    <div class="text-xs-center" v-if="loading">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+    </div>
     <div v-for="module in filteredModules" :key="module.id" class="single-module">
       <!--  <router-link :to="'/module/'+module['.key']"> <h2>{{ module[".key"] }} </h2> </router-link> -->
       <router-link :to="'/Module/'+module.ModuleCode"> <h2>{{ module.ModuleCode }} </h2> </router-link>
@@ -76,6 +82,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       search: '',
       SU: '',
       department: '',
@@ -147,11 +154,12 @@ export default {
     filteredModules: function () {
       // console.log(modsInfo)
       // this.getData();
-
+      this.loading = true;
       if (this.rating != '') {
         return this.modules.filter((module) => {
         // return module['.key'].match(this.search.toUpperCase())
         if (module.rating > this.rating) {
+          this.loading = false;
           return module.rating
           }
       })
@@ -162,6 +170,7 @@ export default {
         // return module['.key'].match(this.search.toUpperCase())
         //console.log(this.webcast===module.webcast.toString())
         if (module.webcast.toString() ===this.webcast) {
+          this.loading = false;
           return module.webcast.toString().match(this.webcast)
           }
       })
@@ -171,6 +180,7 @@ export default {
         return this.modules.filter((module) => {
         // return module['.key'].match(this.search.toUpperCase())
         if (module.su.toString() === this.SU) {
+          this.loading = false;
           return module.su.toString().match(this.SU)
           }
       })
@@ -180,6 +190,7 @@ export default {
         return this.modules.filter((module) => {
         // return module['.key'].match(this.search.toUpperCase())
         if (module.project.toString() === this.project) {
+          this.loading = false;
           return module.project.toString().match(this.project)
           }
       })
@@ -189,6 +200,7 @@ export default {
         console.log(this.department)
         return this.modules.filter((module) => {
           // return module['.key'].match(this.search.toUpperCase())
+          this.loading = false;
           return module.Department.toUpperCase().match(this.department.toUpperCase())
       })
       }
@@ -196,12 +208,14 @@ export default {
       if (this.search != ''){
         return this.modules.filter((module) => {
           // return module['.key'].match(this.search.toUpperCase())
+          this.loading = false;
           return module.ModuleCode.match(this.search.toUpperCase())
       })
       }
 
       return this.modules.filter((module) => {
         // return module['.key'].match(this.search.toUpperCase())
+        this.loading = false;
         return module
     })
   }
